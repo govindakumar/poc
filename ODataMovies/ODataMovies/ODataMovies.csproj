@@ -198,6 +198,7 @@
     </Compile>
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\MovieExpenses.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\StarRating.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

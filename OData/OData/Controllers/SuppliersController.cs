@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using OData.Models;
-using StackExchange.Redis;
+﻿using OData.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,69 +12,46 @@ using System.Web.OData;
 
 namespace OData.Controllers
 {
-    public class Productscontroller:ODataController
+    public class SuppliersController: ODataController
     {
         Models.ProductsContext db = new Models.ProductsContext();
-        private bool ProductExists(int key)
-        {
-            return db.Products.Any(p => p.Id == key);
-        }
-        private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(() =>
-        {
-            return ConnectionMultiplexer.Connect("pocs.redis.cache.windows.net,abortConnect=false,ssl=true,password=tQNvBdL/Ldzg2VkV7OxmYJ7rRVu8X9hpg6gDNn6W9V4=,ConnectTimeout=10000");
-        });
-        public static ConnectionMultiplexer Connection
-        {
-            get
-            {
-                return lazyConnection.Value;
-            }
-        }
-        public IDatabase cacheDB { get; set; }
-        public Productscontroller()
-        {
-            cacheDB = Connection.GetDatabase();
-        }
 
+        private bool SupplierExists(int key)
+        {
+            return db.Suppliers.Any(p => p.Id == key);
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
         }
 
-
         #region GET
         [EnableQuery]
-        public IQueryable<Products> Get()
+        public IQueryable<Supplier> Get()
         {
-            var product = new Products { Id = 1, Name = "Super Car", Category = "Toy", Price = 100, Supplier = new Supplier { Id = 1, Name = "Satyam Suppliers" }, SupplierId = 1 };
-            
-            List<Products> lst = new List<Products>();
-            lst.Add(product);
-            cacheDB.StringSet("p1", JsonConvert.SerializeObject(lst));
-            if (product==null)
-            return db.Products;
-            return lst.AsQueryable() ;
+            var supplier = db.Suppliers;
+            return supplier;
         }
 
         [EnableQuery]
-        public SingleResult<Products> Get([FromODataUri] int key)
+        public SingleResult<Supplier> Get([FromODataUri] int key)
         {
-            IQueryable<Products> result = db.Products.Where(p => p.Id == key);
+            IQueryable<Supplier> result = db.Suppliers.Where(p => p.Id == key);
             return SingleResult.Create(result);
         }
         #endregion GET
 
         #region POST
-        public async Task<IHttpActionResult> Post(Products product)
+        public async Task<IHttpActionResult> Post(Supplier supplier)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            db.Products.Add(product);
+            db.Suppliers.Add(supplier);
             await db.SaveChangesAsync();
-            return Created(product);
+            return Created(supplier);
         }
         #endregion POST
 
@@ -84,13 +59,13 @@ namespace OData.Controllers
         //PUT:- Replaces the entire entity so to use PUT user have to pass the entire entity.
         //PATCH:- It is a partial update. Here user should send only the fields which they want to update.
         //* Patch is prefered update operation for ODATA.
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Products> product)
+        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<Supplier> product)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var entity = await db.Products.FindAsync(key);
+            var entity = await db.Suppliers.FindAsync(key);
             if (entity == null)
             {
                 return NotFound();
@@ -102,7 +77,7 @@ namespace OData.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(key))
+                if (!SupplierExists(key))
                 {
                     return NotFound();
                 }
@@ -113,7 +88,7 @@ namespace OData.Controllers
             }
             return Updated(entity);
         }
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Products update)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, Supplier update)
         {
             if (!ModelState.IsValid)
             {
@@ -130,7 +105,7 @@ namespace OData.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(key))
+                if (!SupplierExists(key))
                 {
                     return NotFound();
                 }
@@ -147,16 +122,15 @@ namespace OData.Controllers
         #region Delete
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            var product = await db.Products.FindAsync(key);
-            if (product == null)
+            var supplier = await db.Suppliers.FindAsync(key);
+            if (supplier == null)
             {
                 return NotFound();
             }
-            db.Products.Remove(product);
+            db.Suppliers.Remove(supplier);
             await db.SaveChangesAsync();
             return StatusCode(HttpStatusCode.NoContent);
         }
         #endregion Delete
-
     }
 }

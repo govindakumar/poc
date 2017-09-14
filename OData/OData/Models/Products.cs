@@ -11,5 +11,9 @@ namespace OData.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Category { get; set; }
+
+        public int? SupplierId { get; set; }
+        public virtual Supplier Supplier { get; set; }
+
     }
 }

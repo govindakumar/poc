@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -31,6 +32,11 @@ namespace ODataMovies.Models
             this.LastModifiedOn = DateTime.Now;
             return this;
         }
+
+        [ForeignKey("Expense")]
+        public int? ExpenseId { get; set; }
+
+        public virtual MovieExpenses Expenses { get; set; }
 
         private DateTime m_lastModifiedOn = DateTime.Now;
     }

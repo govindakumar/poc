@@ -75,8 +75,8 @@ namespace ODataMovies.Business
 
         private static List<Movie> m_movies = new Movie[]
         {
-            new Movie { Id = 1, Rating = StarRating.FiveStar, ReleaseDate = new DateTime(2015, 10, 25), Title = "StarWars - The Force Awakens", Director = new Person { FirstName="J.J.", LastName="Abrams" } },
-            new Movie { Id = 2, Rating = StarRating.FourStar, ReleaseDate = new DateTime(2015, 5, 15), Title = "Mad Max - The Fury Road", Director = new Person { FirstName ="George", LastName="Miller" } }
+            new Movie { Id = 1, Rating = StarRating.FiveStar, ReleaseDate = new DateTime(2015, 10, 25), Title = "StarWars - The Force Awakens", Director = new Person { FirstName="J.J.", LastName="Abrams" },Expenses=new MovieExpenses { ExpenseId=123,Actor=1000000,Director=500000,Production=200000,Promotion=400000} },
+            new Movie { Id = 2, Rating = StarRating.FourStar, ReleaseDate = new DateTime(2015, 5, 15), Title = "Mad Max - The Fury Road", Director = new Person { FirstName ="George", LastName="Miller" },Expenses=new MovieExpenses { ExpenseId=123,Actor=1000000,Director=500000,Production=200000,Promotion=400000} }
         }.ToList();
 
         private object _lock = new object();
