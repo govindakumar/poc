@@ -24,12 +24,27 @@ namespace OData
             );
 
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Products>("Products");
-            builder.EntitySet<Products>("Suppliers");
+            builder.EntitySet<Product>("Products");
+            builder.EntitySet<Product>("Suppliers");
             config.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: null,
                 model: builder.GetEdmModel());
+            //Action
+            builder.Namespace = "OData";
+            builder.EntityType<Product>()
+                 .Action("Rate")
+                 .Parameter<int>("Rating");
+            //Function
+           // builder.Namespace = "OData";
+            builder.EntityType<Product>().Collection
+                   .Function("MostExpensive")
+                   .Returns<double>();
+
+            //Unbound Function
+            //builder.Function("GetSalesTaxRate")
+            //       .Returns<double>()
+            //       .Parameter<int>("PostalCode");
         }
     }
 }

@@ -40,15 +40,19 @@ namespace OData.Controllers
             IQueryable<Supplier> result = db.Suppliers.Where(p => p.Id == key);
             return SingleResult.Create(result);
         }
+
+       
         #endregion GET
 
         #region POST
         public async Task<IHttpActionResult> Post(Supplier supplier)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
+            supplier = new Supplier() { Id = 1, Name = "Shyam Suppliers" };
             db.Suppliers.Add(supplier);
             await db.SaveChangesAsync();
             return Created(supplier);
@@ -132,5 +136,50 @@ namespace OData.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
         #endregion Delete
+
+        #region Entity Relation
+
+        // Route URI: http://localhost:1876/Suppliers(1)/
+        // I have a doubt here ideally it should be getting called using http://localhost:1876/Suppliers(1)/Products but
+        // its not working need to check.  
+        [EnableQuery]
+        public IQueryable<Product> GetProducts([FromODataUri] int key)
+        {
+            return db.Suppliers.Where(m => m.Id.Equals(key)).SelectMany(m => m.Products);
+        }
+        
+        // Not implemented the ref deletion and creation.
+
+        //[AcceptVerbs("POST", "PUT")]
+        //public async Task<IHttpActionResult> CreateRef([FromODataUri] int key,
+        //string navigationProperty, [FromBody] Uri link)
+        //{
+        //    var product = await db.Products.SingleOrDefaultAsync(p => p.Id == key);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    switch (navigationProperty)
+        //    {
+        //        case "Supplier":
+        //            // Note: The code for GetKeyFromUri is shown later in this topic.
+        //            var relatedKey = Helpers.GetKeyFromUri<int>(Request, link);
+        //            var supplier = await db.Suppliers.SingleOrDefaultAsync(f => f.Id == relatedKey);
+        //            if (supplier == null)
+        //            {
+        //                return NotFound();
+        //            }
+
+        //            product.Supplier = supplier;
+        //            break;
+
+        //        default:
+        //            return StatusCode(HttpStatusCode.NotImplemented);
+        //    }
+        //    await db.SaveChangesAsync();
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+        #endregion Entity Relation
     }
 }

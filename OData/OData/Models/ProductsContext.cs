@@ -18,13 +18,13 @@ namespace OData.Models
         {
             modelBuilder.HasDefaultSchema("dbo");
 
-            modelBuilder.Entity<Products>()
+            modelBuilder.Entity<Product>()
                 .Property(p => p.Name)
                 .IsRequired();
-            modelBuilder.Entity<Products>()
+            modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
                 .IsRequired();
-            modelBuilder.Entity<Products>()
+            modelBuilder.Entity<Product>()
                 .Property(p => p.Category)
                 .IsRequired();
 
@@ -32,13 +32,16 @@ namespace OData.Models
                 .Property(p => p.Name)
                 .IsRequired();
 
-            modelBuilder.Entity<Products>()
+            modelBuilder.Entity<Product>()
                 .HasRequired(s => s.Supplier)
                 .WithMany(s => s.Products)
                 .HasForeignKey(s => s.SupplierId);
+            
         }
-        public DbSet<Products> Products { get; set;}
+        public DbSet<Product> Products { get; set;}
         public DbSet<Supplier> Suppliers { get; set;}
+        public DbSet<ProductRating> Ratings { get; set; }
+
 
     }
 }

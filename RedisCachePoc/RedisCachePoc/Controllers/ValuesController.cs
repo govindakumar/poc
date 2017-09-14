@@ -15,7 +15,8 @@ namespace RedisCachePoc.Controllers
     {
         private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(() =>
         {
-            return ConnectionMultiplexer.Connect("pocs.redis.cache.windows.net,abortConnect=false,ssl=true,password=tQNvBdL/Ldzg2VkV7OxmYJ7rRVu8X9hpg6gDNn6W9V4=,ConnectTimeout=10000");
+            return ConnectionMultiplexer.Connect("DemoRedisCache.redis.cache.windows.net:6380,password=S+NsEZUzdj3VV68+e9COKhV/tT6KaVAQ2EiLDk6MhNc=,ssl=True,abortConnect=False,ConnectTimeout=10000");
+            //return ConnectionMultiplexer.Connect("pocs.redis.cache.windows.net,abortConnect=false,ssl=true,password=tQNvBdL/Ldzg2VkV7OxmYJ7rRVu8X9hpg6gDNn6W9V4=,ConnectTimeout=10000");
         });
 
         public static ConnectionMultiplexer Connection
