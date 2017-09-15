@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using OData.DataAccess;
+using OData.Logging;
 using OData.Models;
 using StackExchange.Redis;
 using System;
@@ -18,6 +20,8 @@ namespace OData.Controllers
     public class Productscontroller:ODataController
     {
         Models.ProductsContext db = new Models.ProductsContext();
+
+        private IProductRepository _productRepository { get; set; }
         private bool ProductExists(int key)
         {
             return db.Products.Any(p => p.Id == key);
@@ -34,8 +38,12 @@ namespace OData.Controllers
             }
         }
         public IDatabase cacheDB { get; set; }
-        public Productscontroller()
+
+        private ILogMessage _logging { get; set; }
+        public Productscontroller(ILogMessage logging)
         {
+            _logging = logging;
+            //_productRepository = productRepository;
             cacheDB = Connection.GetDatabase();
         }
 
@@ -51,14 +59,15 @@ namespace OData.Controllers
         [EnableQuery]
         public IQueryable<Product> Get()
         {
-            var product = new Product { Id = 1, Name = "Super Car", Category = "Toy", Price = 100, Supplier = new Supplier { Id = 1, Name = "Satyam Suppliers" }, SupplierId = 1 };
+            _logging.LogTrace("Get Products got called");
+            //var product = new Product { Id = 1, Name = "Super Car", Category = "Toy", Price = 100, Supplier = new Supplier { Id = 1, Name = "Satyam Suppliers" }, SupplierId = 1 };
             
-            List<Product> lst = new List<Product>();
-            lst.Add(product);
-            cacheDB.StringSet("p1", JsonConvert.SerializeObject(lst));
-            if (product==null)
+            //List<Product> lst = new List<Product>();
+            //lst.Add(product);
+            //cacheDB.StringSet("p1", JsonConvert.SerializeObject(lst));
+            //if (product==null)
             return db.Products;
-            return lst.AsQueryable() ;
+            //return lst.AsQueryable() ;
         }
 
         //Route URi: http://localhost:1876/Products(1)

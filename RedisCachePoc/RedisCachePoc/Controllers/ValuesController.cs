@@ -30,6 +30,7 @@ namespace RedisCachePoc.Controllers
 
         public ValuesController()
         {
+            
             cacheDB = Connection.GetDatabase();
         }
         // GET api/values

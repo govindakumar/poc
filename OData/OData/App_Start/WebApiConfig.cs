@@ -5,6 +5,9 @@ using System.Web.Http;
 using OData.Models;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
+using Microsoft.Practices.Unity;
+using OData.Logging;
+using OData.Controllers;
 
 namespace OData
 {
@@ -12,7 +15,11 @@ namespace OData
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            //RegisterDependency;
+            var container = new UnityContainer();
+            container.RegisterType<ILogMessage, DBLogging>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
+           
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -25,7 +32,8 @@ namespace OData
 
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Product>("Products");
-            builder.EntitySet<Product>("Suppliers");
+            builder.EntitySet<Supplier>("Suppliers");
+            builder.EntitySet<Log>("Logs");
             config.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: null,
@@ -46,5 +54,6 @@ namespace OData
             //       .Returns<double>()
             //       .Parameter<int>("PostalCode");
         }
+
     }
 }
