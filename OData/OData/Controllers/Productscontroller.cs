@@ -59,15 +59,15 @@ namespace OData.Controllers
         [EnableQuery]
         public IQueryable<Product> Get()
         {
-            _logging.LogTrace("Get Products got called");
+            // _logging.LogTrace("Get Products got called");
             //var product = new Product { Id = 1, Name = "Super Car", Category = "Toy", Price = 100, Supplier = new Supplier { Id = 1, Name = "Satyam Suppliers" }, SupplierId = 1 };
-            
-            //List<Product> lst = new List<Product>();
+
+           // List<Product> lst = new List<Product>();
             //lst.Add(product);
             //cacheDB.StringSet("p1", JsonConvert.SerializeObject(lst));
             //if (product==null)
             return db.Products;
-            //return lst.AsQueryable() ;
+            //return lst.AsQueryable();
         }
 
         //Route URi: http://localhost:1876/Products(1)

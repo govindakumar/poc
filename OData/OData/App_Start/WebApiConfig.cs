@@ -18,6 +18,7 @@ namespace OData
             //RegisterDependency;
             var container = new UnityContainer();
             container.RegisterType<ILogMessage, DBLogging>(new HierarchicalLifetimeManager());
+            //container.regis
             config.DependencyResolver = new UnityResolver(container);
            
 
@@ -53,6 +54,7 @@ namespace OData
             //builder.Function("GetSalesTaxRate")
             //       .Returns<double>()
             //       .Parameter<int>("PostalCode");
+            config.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
         }
 
     }
