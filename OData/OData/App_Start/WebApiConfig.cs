@@ -54,6 +54,7 @@ namespace OData
             //builder.Function("GetSalesTaxRate")
             //       .Returns<double>()
             //       .Parameter<int>("PostalCode");
+            
             config.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
         }
 
