@@ -1,5 +1,5 @@
 ﻿using Microsoft.Web.Http;
-using MobileOpsPilotData.Service.Interfaces;
+using MobileOpsPilotData.Service;
 using MobileOpsPilotData.Service.Model;
 using MobileOpsPilotData.Service.Models;
 using System;
@@ -19,9 +19,9 @@ namespace MobileOpsPilotData.Controllers
     public class FlightPlansV3Controller : ODataController
     {
         private IFlightPlanService _flightPlanService;
-        public FlightPlansV3Controller()
+        public FlightPlansV3Controller(IFlightPlanService flightPlanService)
         {
-            //_flightPlanService = flightPlanService;
+            _flightPlanService = flightPlanService;
         }
 
         [EnableQuery]
@@ -40,8 +40,6 @@ namespace MobileOpsPilotData.Controllers
             var flightPlans = _flightPlanService.GetFlightPlans().FirstOrDefault();
             //return Ok<IEnumerable<FlightPlan>>(flightPlans);
             return flightPlans;
-
-
         }
 
         [HttpGet]

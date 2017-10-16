@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MobileOpsPilotData.Service.Interfaces
+namespace MobileOpsPilotData.Service
 {
     public interface IFlightPlanService
     {
