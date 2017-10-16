@@ -1,24 +1,56 @@
-﻿using System;
+﻿using Microsoft.OData;
+using Microsoft.OData.Edm;
+using Microsoft.OData.UriParser;
+using Microsoft.Web.Http;
+using Microsoft.Web.Http.Versioning;
+using Microsoft.Web.OData.Builder;
+using MobileOpsPilotData.Configuration;
+using MobileOpsPilotData.Service.Model;
+using MobileOpsPilotData.Service.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.OData.Batch;
+//using System.Web.Http.OData.Batch;
+using System.Web.OData.Builder;
+using System.Web.OData.Extensions;
+//using System.Web.Http.OData.Builder;
 
 namespace MobileOpsPilotData
 {
     public static class WebApiConfig
     {
+        static void ConfigureODataServices(IContainerBuilder builder)
+        {
+            builder.AddService(Microsoft.OData.ServiceLifetime.Singleton, typeof(ODataUriResolver), sp => new CaseInsensitiveODataUriResolver());
+        }
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
-            // Web API routes
+            
             config.MapHttpAttributeRoutes();
+            var httpServer = new HttpServer(config);
+            config.AddApiVersioning();
+            config.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
+           
+            var modelBuilder = new VersionedODataModelBuilder(config)
+            {
+                ModelBuilderFactory = () => new ODataConventionModelBuilder().EnableLowerCamelCase(),
+                ModelConfigurations =
+                {
+                    new FlightPlanConfiguration(),
+                    new FlightDetailsConfiguration()
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                }
+
+            };
+            var models = modelBuilder.GetEdmModels();
+            var batchHandler = new DefaultODataBatchHandler(httpServer);
+
+            config.MapVersionedODataRoutes("odata", "data/v{apiVersion}", models, ConfigureODataServices, batchHandler);
+            //config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
+            
+
         }
     }
 }
