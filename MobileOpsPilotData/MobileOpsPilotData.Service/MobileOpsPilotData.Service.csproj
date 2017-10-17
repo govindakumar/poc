@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Interfaces\IFlightPlanService.cs" />
+    <Compile Include="Mapper\FlightPlanMapper.cs" />
+    <Compile Include="Mapper\IFlightPlanMapper.cs" />
     <Compile Include="Model\Aerodrome.cs" />
     <Compile Include="Model\FlightDetail.cs" />
     <Compile Include="Model\FlightPlan.cs" />
@@ -67,9 +69,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mapper\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

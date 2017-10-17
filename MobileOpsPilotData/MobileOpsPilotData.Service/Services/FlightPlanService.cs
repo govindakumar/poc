@@ -1,5 +1,6 @@
 ﻿using MobileOpsPilotData.Repository.Interfaces;
-using MobileOpsPilotData.Repository.Repositories;
+using MobileOpsPilotData.Service.Models;
+//using MobileOpsPilotData.Repository.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace MobileOpsPilotData.Service
         {
             _flightPlanRepository = flightPlanRepository;
         }
-        public IQueryable<FlightPlan> GetFlightPlans()
+        public List<FlightPlan> GetFlightPlans()
         {
-           var data= _flightPlanRepository.GetFlightPlans();
-            
-            return data;
+            //var data= _flightPlanRepository.GetFlightPlans();
+
+            // return data;
+            //return new FlightPlan { FlightNumber = "1234" };
+            return new List<FlightPlan>();
 
         }
     }

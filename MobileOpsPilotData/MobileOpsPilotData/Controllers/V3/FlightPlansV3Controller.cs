@@ -28,9 +28,9 @@ namespace MobileOpsPilotData.Controllers.V3
         [EnableQuery]
         public IHttpActionResult GetFlightPlans()
         {
-            //var flightPlans = _flightPlanService.GetFlightPlans();
-            var flp = new List<FlightPlan>();
-            return Ok<IEnumerable<FlightPlan>>(flp);
+            var flightPlans = _flightPlanService.GetFlightPlans();
+            //var flp = new List<FlightPlan>();
+            return Ok<IEnumerable<FlightPlan>>(flightPlans);
            
         }
 
