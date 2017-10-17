@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="42f37ea8ebea47b185da08b4b031ad32" Name="Diagram1">
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.Aerodrome" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.DriftdownDetail" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.Flight" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.FlightDetail" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.FlightPlan" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.WindCheckpoint" Width="1.5" PointX="7.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.WindFlighLevelDetail" Width="1.5" PointX="9.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.WindReport" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileOpsPilotDbModel.database_firewall_rules" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="MobileOpsPilotDbModel.FK_DriftdownDetail_FlightPlanId_FlightPlan_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileOpsPilotDbModel.FK_FlightPlan_FlightId_Flight_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileOpsPilotDbModel.FK_FlightDetail_FlightPlanId_FlightPlan_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileOpsPilotDbModel.FK_WindReport_FlightPlanId_FlightPlan_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileOpsPilotDbModel.FK_WindCheckpoint_WindReportId_WindReport_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileOpsPilotDbModel.FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

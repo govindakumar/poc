@@ -7,6 +7,9 @@ using System.Web.OData.Builder;
 using Microsoft.Web.Http;
 using MobileOpsPilotData.Service.Models;
 using Microsoft.OData.Edm;
+using System.Web.OData.Routing.Conventions;
+using MobileOpsPilotData.Extensions;
+//using MobileOpsPilotData.Repository.Repositories;
 
 namespace MobileOpsPilotData.Configuration
 {
@@ -28,6 +31,11 @@ namespace MobileOpsPilotData.Configuration
                .Function("Current")
                .ReturnsFromEntitySet<FlightPlan>("FlightPlan");
 
+            var fnGetCurrent = builder.Function("GetCurrentFlightPlan");
+            fnGetCurrent.Returns<FlightPlan>();
+            fnGetCurrent.Parameter<string>("flightNumber");
+            fnGetCurrent.Parameter<string>("iataAirlineCode");
+
             //var fnCurrent = builder.EntityType<FlightPlan>().Collection.Function("Current");
             //fnCurrent.Parameter<string>("flightNumber");
             //fnCurrent.ReturnsFromEntitySet<FlightPlan>("FlightPlan");
@@ -38,10 +46,12 @@ namespace MobileOpsPilotData.Configuration
             //builder.Function("GetFlightPlans")
             //    .Returns<FlightPlan>()
             //    .Parameter(<string>("flightNumber")
-                
+
 
             return builder.EntityType<FlightPlan>();
-           
+
+            //var conventions = ODataRoutingConventions.CreateDefault();
+            //conventions.Insert(0, new CompositeKeyRoutingConvention());
 
             // return flightplan;
         }

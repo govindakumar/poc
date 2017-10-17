@@ -5,6 +5,7 @@ using Microsoft.Web.Http;
 using Microsoft.Web.Http.Versioning;
 using Microsoft.Web.OData.Builder;
 using MobileOpsPilotData.Configuration;
+using MobileOpsPilotData.Extensions;
 using MobileOpsPilotData.Service.Model;
 using MobileOpsPilotData.Service.Models;
 using System;
@@ -15,6 +16,8 @@ using System.Web.OData.Batch;
 //using System.Web.Http.OData.Batch;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
+using System.Web.OData.Routing;
+using System.Web.OData.Routing.Conventions;
 //using System.Web.Http.OData.Builder;
 
 namespace MobileOpsPilotData
@@ -46,10 +49,13 @@ namespace MobileOpsPilotData
             };
             var models = modelBuilder.GetEdmModels();
             var batchHandler = new DefaultODataBatchHandler(httpServer);
+            var conventions = ODataRoutingConventions.CreateDefault();
+            conventions.Insert(0, new CompositeKeyRoutingConvention());
 
             config.MapVersionedODataRoutes("odata", "data/v{apiVersion}", models, ConfigureODataServices, batchHandler);
             //config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
-            
+            //config.MapVersionedODataRoutes("odata", "data/v{apiVersion}", models, new DefaultODataPathHandler(),conventions, batchHandler);
+
 
         }
     }

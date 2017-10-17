@@ -14,7 +14,7 @@ namespace MobileOpsPilotData.Service.Models
         public int SourceId { get; set; }
         [Key]
         public string FlightNumber { get; set; }
-        
+        //[Key]
         public string IataAirlineCode { get; set; }
 
         public DateTime DepartureDate { get; set; }

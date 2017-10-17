@@ -1,0 +1,643 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MobileOpsPilotDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aerodrome">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IataCode" Type="varchar" MaxLength="50" />
+          <Property Name="IcoaCode" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="VersionHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DriftdownDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FlightPlanId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="200" />
+          <Property Name="Altitude" Type="varchar" MaxLength="50" />
+          <Property Name="MelPenalty" Type="varchar" MaxLength="50" />
+          <Property Name="IsaDeviation" Type="varchar" MaxLength="50" />
+          <Property Name="TerrainClearanceDeltaWeight" Type="varchar" MaxLength="50" />
+          <Property Name="RampWeight" Type="varchar" MaxLength="50" />
+          <Property Name="TerrainClearanceWeight" Type="varchar" MaxLength="50" />
+          <Property Name="PayloadPad" Type="varchar" MaxLength="50" />
+          <Property Name="IataPoa" Type="varchar" MaxLength="50" />
+          <Property Name="IcaoPoa" Type="varchar" MaxLength="50" />
+          <Property Name="IataPod" Type="varchar" MaxLength="50" />
+          <Property Name="IcaoPod" Type="varchar" MaxLength="50" />
+          <Property Name="AntiIce" Type="varchar" MaxLength="50" />
+          <Property Name="TextVersion2Header" Type="varchar" MaxLength="50" />
+          <Property Name="TextVersion2" Type="varchar" MaxLength="50" />
+          <Property Name="VersionHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FlightNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IataAirlineCode" Type="varchar" MaxLength="50" />
+          <Property Name="DepartureDate " Type="datetime" />
+          <Property Name="VersionHash " Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="FlightDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FlightPlanId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ScheduledEstTimeArrival" Type="time" Precision="7" />
+          <Property Name="ScheduledEstTimeDeparture" Type="time" Precision="7" />
+          <Property Name="EstimatedTimeArrival" Type="time" Precision="7" />
+          <Property Name="EstimatedTimeDeparture" Type="time" Precision="7" />
+          <Property Name="FlightNumber" Type="varchar" MaxLength="50" />
+          <Property Name="IataAirlineCode" Type="varchar" MaxLength="50" />
+          <Property Name="AtcClearance" Type="varchar" MaxLength="50" />
+          <Property Name="VersionHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="FlightPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FlightId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SourceId" Type="int" />
+          <Property Name="FlightNumber" Type="varchar" MaxLength="50" />
+          <Property Name="IataAirlineCode" Type="varchar" MaxLength="50" />
+          <Property Name="DepartureDate" Type="datetime" />
+          <Property Name="Dispatcher" Type="varchar" MaxLength="50" />
+          <Property Name="DispatchDesk" Type="varchar" MaxLength="50" />
+          <Property Name="DispatchPhone" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="200" />
+          <Property Name="VersionHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="WindCheckpoint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WindReportId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CheckpointName" Type="nvarchar" MaxLength="50" />
+          <Property Name="VersionHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="WindFlighLevelDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WindCheckpointId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Temperature" Type="varchar" MaxLength="50" />
+          <Property Name="WindVelocity" Type="varchar" MaxLength="50" />
+          <Property Name="WindDirection" Type="varchar" MaxLength="50" />
+          <Property Name="WindShear" Type="varchar" MaxLength="50" />
+          <Property Name="Level" Type="varchar" MaxLength="50" />
+          <Property Name="VersionHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="WindReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FlightPlanId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VersionHash" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'narsi.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DriftdownDetail_FlightPlanId_FlightPlan_Id">
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="1" />
+          <End Role="DriftdownDetail" Type="Self.DriftdownDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DriftdownDetail">
+              <PropertyRef Name="FlightPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FlightDetail_FlightPlanId_FlightPlan_Id">
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="1" />
+          <End Role="FlightDetail" Type="Self.FlightDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FlightDetail">
+              <PropertyRef Name="FlightPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FlightPlan_FlightId_Flight_Id">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FlightPlan">
+              <PropertyRef Name="FlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WindCheckpoint_WindReportId_WindReport_Id">
+          <End Role="WindReport" Type="Self.WindReport" Multiplicity="1" />
+          <End Role="WindCheckpoint" Type="Self.WindCheckpoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WindReport">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WindCheckpoint">
+              <PropertyRef Name="WindReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id">
+          <End Role="WindCheckpoint" Type="Self.WindCheckpoint" Multiplicity="1" />
+          <End Role="WindFlighLevelDetail" Type="Self.WindFlighLevelDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WindCheckpoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WindFlighLevelDetail">
+              <PropertyRef Name="WindCheckpointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WindReport_FlightPlanId_FlightPlan_Id">
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="1" />
+          <End Role="WindReport" Type="Self.WindReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WindReport">
+              <PropertyRef Name="FlightPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MobileOpsPilotDbModelStoreContainer">
+          <EntitySet Name="Aerodrome" EntityType="Self.Aerodrome" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DriftdownDetail" EntityType="Self.DriftdownDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FlightDetail" EntityType="Self.FlightDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FlightPlan" EntityType="Self.FlightPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WindCheckpoint" EntityType="Self.WindCheckpoint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WindFlighLevelDetail" EntityType="Self.WindFlighLevelDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WindReport" EntityType="Self.WindReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_DriftdownDetail_FlightPlanId_FlightPlan_Id" Association="Self.FK_DriftdownDetail_FlightPlanId_FlightPlan_Id">
+            <End Role="FlightPlan" EntitySet="FlightPlan" />
+            <End Role="DriftdownDetail" EntitySet="DriftdownDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FlightDetail_FlightPlanId_FlightPlan_Id" Association="Self.FK_FlightDetail_FlightPlanId_FlightPlan_Id">
+            <End Role="FlightPlan" EntitySet="FlightPlan" />
+            <End Role="FlightDetail" EntitySet="FlightDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FlightPlan_FlightId_Flight_Id" Association="Self.FK_FlightPlan_FlightId_Flight_Id">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="FlightPlan" EntitySet="FlightPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WindCheckpoint_WindReportId_WindReport_Id" Association="Self.FK_WindCheckpoint_WindReportId_WindReport_Id">
+            <End Role="WindReport" EntitySet="WindReport" />
+            <End Role="WindCheckpoint" EntitySet="WindCheckpoint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id" Association="Self.FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id">
+            <End Role="WindCheckpoint" EntitySet="WindCheckpoint" />
+            <End Role="WindFlighLevelDetail" EntitySet="WindFlighLevelDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WindReport_FlightPlanId_FlightPlan_Id" Association="Self.FK_WindReport_FlightPlanId_FlightPlan_Id">
+            <End Role="FlightPlan" EntitySet="FlightPlan" />
+            <End Role="WindReport" EntitySet="WindReport" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MobileOpsPilotDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aerodrome">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="IataCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IcoaCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VersionHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DriftdownDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="FlightPlanId" Type="Guid" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Altitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MelPenalty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsaDeviation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TerrainClearanceDeltaWeight" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RampWeight" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TerrainClearanceWeight" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PayloadPad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IataPoa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IcaoPoa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IataPod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IcaoPod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AntiIce" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TextVersion2Header" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TextVersion2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VersionHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FlightPlan" Relationship="Self.FK_DriftdownDetail_FlightPlanId_FlightPlan_Id" FromRole="DriftdownDetail" ToRole="FlightPlan" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="FlightNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IataAirlineCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartureDate_" Type="DateTime" Precision="3" />
+          <Property Name="VersionHash_" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FlightPlans" Relationship="Self.FK_FlightPlan_FlightId_Flight_Id" FromRole="Flight" ToRole="FlightPlan" />
+        </EntityType>
+        <EntityType Name="FlightDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="FlightPlanId" Type="Guid" Nullable="false" />
+          <Property Name="ScheduledEstTimeArrival" Type="Time" Precision="7" />
+          <Property Name="ScheduledEstTimeDeparture" Type="Time" Precision="7" />
+          <Property Name="EstimatedTimeArrival" Type="Time" Precision="7" />
+          <Property Name="EstimatedTimeDeparture" Type="Time" Precision="7" />
+          <Property Name="FlightNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IataAirlineCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AtcClearance" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VersionHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FlightPlan" Relationship="Self.FK_FlightDetail_FlightPlanId_FlightPlan_Id" FromRole="FlightDetail" ToRole="FlightPlan" />
+        </EntityType>
+        <EntityType Name="FlightPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="FlightId" Type="Guid" Nullable="false" />
+          <Property Name="SourceId" Type="Int32" />
+          <Property Name="FlightNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IataAirlineCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartureDate" Type="DateTime" Precision="3" />
+          <Property Name="Dispatcher" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DispatchDesk" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DispatchPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VersionHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DriftdownDetails" Relationship="Self.FK_DriftdownDetail_FlightPlanId_FlightPlan_Id" FromRole="FlightPlan" ToRole="DriftdownDetail" />
+          <NavigationProperty Name="Flight" Relationship="Self.FK_FlightPlan_FlightId_Flight_Id" FromRole="FlightPlan" ToRole="Flight" />
+          <NavigationProperty Name="FlightDetails" Relationship="Self.FK_FlightDetail_FlightPlanId_FlightPlan_Id" FromRole="FlightPlan" ToRole="FlightDetail" />
+          <NavigationProperty Name="WindReports" Relationship="Self.FK_WindReport_FlightPlanId_FlightPlan_Id" FromRole="FlightPlan" ToRole="WindReport" />
+        </EntityType>
+        <EntityType Name="WindCheckpoint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="WindReportId" Type="Guid" Nullable="false" />
+          <Property Name="CheckpointName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VersionHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WindReport" Relationship="Self.FK_WindCheckpoint_WindReportId_WindReport_Id" FromRole="WindCheckpoint" ToRole="WindReport" />
+          <NavigationProperty Name="WindFlighLevelDetails" Relationship="Self.FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id" FromRole="WindCheckpoint" ToRole="WindFlighLevelDetail" />
+        </EntityType>
+        <EntityType Name="WindFlighLevelDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="WindCheckpointId" Type="Guid" Nullable="false" />
+          <Property Name="Temperature" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WindVelocity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WindDirection" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WindShear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VersionHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WindCheckpoint" Relationship="Self.FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id" FromRole="WindFlighLevelDetail" ToRole="WindCheckpoint" />
+        </EntityType>
+        <EntityType Name="WindReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="FlightPlanId" Type="Guid" Nullable="false" />
+          <Property Name="VersionHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FlightPlan" Relationship="Self.FK_WindReport_FlightPlanId_FlightPlan_Id" FromRole="WindReport" ToRole="FlightPlan" />
+          <NavigationProperty Name="WindCheckpoints" Relationship="Self.FK_WindCheckpoint_WindReportId_WindReport_Id" FromRole="WindReport" ToRole="WindCheckpoint" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_DriftdownDetail_FlightPlanId_FlightPlan_Id">
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="1" />
+          <End Role="DriftdownDetail" Type="Self.DriftdownDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DriftdownDetail">
+              <PropertyRef Name="FlightPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FlightPlan_FlightId_Flight_Id">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FlightPlan">
+              <PropertyRef Name="FlightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FlightDetail_FlightPlanId_FlightPlan_Id">
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="1" />
+          <End Role="FlightDetail" Type="Self.FlightDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FlightDetail">
+              <PropertyRef Name="FlightPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WindReport_FlightPlanId_FlightPlan_Id">
+          <End Role="FlightPlan" Type="Self.FlightPlan" Multiplicity="1" />
+          <End Role="WindReport" Type="Self.WindReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WindReport">
+              <PropertyRef Name="FlightPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WindCheckpoint_WindReportId_WindReport_Id">
+          <End Role="WindReport" Type="Self.WindReport" Multiplicity="1" />
+          <End Role="WindCheckpoint" Type="Self.WindCheckpoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WindReport">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WindCheckpoint">
+              <PropertyRef Name="WindReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id">
+          <End Role="WindCheckpoint" Type="Self.WindCheckpoint" Multiplicity="1" />
+          <End Role="WindFlighLevelDetail" Type="Self.WindFlighLevelDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WindCheckpoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WindFlighLevelDetail">
+              <PropertyRef Name="WindCheckpointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MobileOpsPilotDb" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aerodromes" EntityType="Self.Aerodrome" />
+          <EntitySet Name="DriftdownDetails" EntityType="Self.DriftdownDetail" />
+          <EntitySet Name="Flights" EntityType="Self.Flight" />
+          <EntitySet Name="FlightDetails" EntityType="Self.FlightDetail" />
+          <EntitySet Name="FlightPlans" EntityType="Self.FlightPlan" />
+          <EntitySet Name="WindCheckpoints" EntityType="Self.WindCheckpoint" />
+          <EntitySet Name="WindFlighLevelDetails" EntityType="Self.WindFlighLevelDetail" />
+          <EntitySet Name="WindReports" EntityType="Self.WindReport" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+          <AssociationSet Name="FK_DriftdownDetail_FlightPlanId_FlightPlan_Id" Association="Self.FK_DriftdownDetail_FlightPlanId_FlightPlan_Id">
+            <End Role="FlightPlan" EntitySet="FlightPlans" />
+            <End Role="DriftdownDetail" EntitySet="DriftdownDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FlightPlan_FlightId_Flight_Id" Association="Self.FK_FlightPlan_FlightId_Flight_Id">
+            <End Role="Flight" EntitySet="Flights" />
+            <End Role="FlightPlan" EntitySet="FlightPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FlightDetail_FlightPlanId_FlightPlan_Id" Association="Self.FK_FlightDetail_FlightPlanId_FlightPlan_Id">
+            <End Role="FlightPlan" EntitySet="FlightPlans" />
+            <End Role="FlightDetail" EntitySet="FlightDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WindReport_FlightPlanId_FlightPlan_Id" Association="Self.FK_WindReport_FlightPlanId_FlightPlan_Id">
+            <End Role="FlightPlan" EntitySet="FlightPlans" />
+            <End Role="WindReport" EntitySet="WindReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WindCheckpoint_WindReportId_WindReport_Id" Association="Self.FK_WindCheckpoint_WindReportId_WindReport_Id">
+            <End Role="WindReport" EntitySet="WindReports" />
+            <End Role="WindCheckpoint" EntitySet="WindCheckpoints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id" Association="Self.FK_WindFlightLevelDetail_WindCheckpointId_WindCheckpoint_Id">
+            <End Role="WindCheckpoint" EntitySet="WindCheckpoints" />
+            <End Role="WindFlighLevelDetail" EntitySet="WindFlighLevelDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MobileOpsPilotDbModelStoreContainer" CdmEntityContainer="MobileOpsPilotDb">
+          <EntitySetMapping Name="Aerodromes">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.Aerodrome">
+              <MappingFragment StoreEntitySet="Aerodrome">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IataCode" ColumnName="IataCode" />
+                <ScalarProperty Name="IcoaCode" ColumnName="IcoaCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VersionHash" ColumnName="VersionHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DriftdownDetails">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.DriftdownDetail">
+              <MappingFragment StoreEntitySet="DriftdownDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FlightPlanId" ColumnName="FlightPlanId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Altitude" ColumnName="Altitude" />
+                <ScalarProperty Name="MelPenalty" ColumnName="MelPenalty" />
+                <ScalarProperty Name="IsaDeviation" ColumnName="IsaDeviation" />
+                <ScalarProperty Name="TerrainClearanceDeltaWeight" ColumnName="TerrainClearanceDeltaWeight" />
+                <ScalarProperty Name="RampWeight" ColumnName="RampWeight" />
+                <ScalarProperty Name="TerrainClearanceWeight" ColumnName="TerrainClearanceWeight" />
+                <ScalarProperty Name="PayloadPad" ColumnName="PayloadPad" />
+                <ScalarProperty Name="IataPoa" ColumnName="IataPoa" />
+                <ScalarProperty Name="IcaoPoa" ColumnName="IcaoPoa" />
+                <ScalarProperty Name="IataPod" ColumnName="IataPod" />
+                <ScalarProperty Name="IcaoPod" ColumnName="IcaoPod" />
+                <ScalarProperty Name="AntiIce" ColumnName="AntiIce" />
+                <ScalarProperty Name="TextVersion2Header" ColumnName="TextVersion2Header" />
+                <ScalarProperty Name="TextVersion2" ColumnName="TextVersion2" />
+                <ScalarProperty Name="VersionHash" ColumnName="VersionHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flights">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.Flight">
+              <MappingFragment StoreEntitySet="Flight">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FlightNumber" ColumnName="FlightNumber" />
+                <ScalarProperty Name="IataAirlineCode" ColumnName="IataAirlineCode" />
+                <ScalarProperty Name="DepartureDate_" ColumnName="DepartureDate " />
+                <ScalarProperty Name="VersionHash_" ColumnName="VersionHash " />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FlightDetails">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.FlightDetail">
+              <MappingFragment StoreEntitySet="FlightDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FlightPlanId" ColumnName="FlightPlanId" />
+                <ScalarProperty Name="ScheduledEstTimeArrival" ColumnName="ScheduledEstTimeArrival" />
+                <ScalarProperty Name="ScheduledEstTimeDeparture" ColumnName="ScheduledEstTimeDeparture" />
+                <ScalarProperty Name="EstimatedTimeArrival" ColumnName="EstimatedTimeArrival" />
+                <ScalarProperty Name="EstimatedTimeDeparture" ColumnName="EstimatedTimeDeparture" />
+                <ScalarProperty Name="FlightNumber" ColumnName="FlightNumber" />
+                <ScalarProperty Name="IataAirlineCode" ColumnName="IataAirlineCode" />
+                <ScalarProperty Name="AtcClearance" ColumnName="AtcClearance" />
+                <ScalarProperty Name="VersionHash" ColumnName="VersionHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FlightPlans">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.FlightPlan">
+              <MappingFragment StoreEntitySet="FlightPlan">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FlightId" ColumnName="FlightId" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="FlightNumber" ColumnName="FlightNumber" />
+                <ScalarProperty Name="IataAirlineCode" ColumnName="IataAirlineCode" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+                <ScalarProperty Name="Dispatcher" ColumnName="Dispatcher" />
+                <ScalarProperty Name="DispatchDesk" ColumnName="DispatchDesk" />
+                <ScalarProperty Name="DispatchPhone" ColumnName="DispatchPhone" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="VersionHash" ColumnName="VersionHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WindCheckpoints">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.WindCheckpoint">
+              <MappingFragment StoreEntitySet="WindCheckpoint">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WindReportId" ColumnName="WindReportId" />
+                <ScalarProperty Name="CheckpointName" ColumnName="CheckpointName" />
+                <ScalarProperty Name="VersionHash" ColumnName="VersionHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WindFlighLevelDetails">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.WindFlighLevelDetail">
+              <MappingFragment StoreEntitySet="WindFlighLevelDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WindCheckpointId" ColumnName="WindCheckpointId" />
+                <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+                <ScalarProperty Name="WindVelocity" ColumnName="WindVelocity" />
+                <ScalarProperty Name="WindDirection" ColumnName="WindDirection" />
+                <ScalarProperty Name="WindShear" ColumnName="WindShear" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="VersionHash" ColumnName="VersionHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WindReports">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.WindReport">
+              <MappingFragment StoreEntitySet="WindReport">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FlightPlanId" ColumnName="FlightPlanId" />
+                <ScalarProperty Name="VersionHash" ColumnName="VersionHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="MobileOpsPilotDbModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
